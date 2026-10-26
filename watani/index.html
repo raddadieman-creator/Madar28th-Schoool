@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>بوعيي أحمي وطني</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Amiri:wght@700&display=swap">
+<style>
+/* Layout: one station at a time, paper-like card, progress strip on top — matches the printed booklet's watercolor palette */
+:root{
+  --bg:#f7f3ec; --paper:#fffdf8; --fg:#2b3a2e; --muted:#6b7a6e; --line:#e2dccf;
+  --green:#3f7d5a; --green-soft:#dfeee4; --pink:#d4607f; --pink-soft:#fbe3ea;
+  --gold:#d9a93b; --gold-soft:#fbf0d2; --purple:#7b5ea7; --purple-soft:#ece4f5;
+  --ok:#2e7d4f; --warn:#b4541e;
+  --display:'Amiri',serif; --body:'Tajawal',system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#1c211d; --paper:#262c28; --fg:#eef1ea; --muted:#a7b3a9; --line:#3a433c;
+  --green:#7dbd94; --green-soft:#2b3f33; --pink:#f08aa6; --pink-soft:#46303a;
+  --gold:#e9c45f; --gold-soft:#45391c; --purple:#b59bdd; --purple-soft:#382f4a;
+  --ok:#8cd3a7; --warn:#f0a06a; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#1c211d; --paper:#262c28; --fg:#eef1ea; --muted:#a7b3a9; --line:#3a433c;
+  --green:#7dbd94; --green-soft:#2b3f33; --pink:#f08aa6; --pink-soft:#46303a;
+  --gold:#e9c45f; --gold-soft:#45391c; --purple:#b59bdd; --purple-soft:#382f4a;
+  --ok:#8cd3a7; --warn:#f0a06a; color-scheme:dark }
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.7;direction:rtl;
+  padding-block:16px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:640px;margin:0 auto}
+header{text-align:center;margin-bottom:14px}
+header h1{font-family:var(--display);font-size:2rem;margin:0;color:var(--green);text-wrap:balance;line-height:1.3}
+header p{margin:4px 0 0;color:var(--muted);font-size:.95rem}
+.prog{display:flex;gap:6px;margin:14px 0 18px}
+.prog span{flex:1;height:7px;border-radius:4px;background:var(--line)}
+.prog span.done{background:var(--green)} .prog span.cur{background:var(--pink)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:22px 20px;box-shadow:0 6px 18px rgba(40,50,40,.06)}
+.eyebrow{display:inline-block;font-size:.78rem;letter-spacing:.06em;font-weight:700;padding:3px 12px;border-radius:999px;margin-bottom:10px}
+.c-green{background:var(--green-soft);color:var(--green)} .c-pink{background:var(--pink-soft);color:var(--pink)}
+.c-gold{background:var(--gold-soft);color:#8a6512} .c-purple{background:var(--purple-soft);color:var(--purple)}
+:root[data-theme="dark"] .c-gold,:root:not([data-theme="light"]) .c-gold{color:var(--gold)}
+h2{font-family:var(--display);font-size:1.5rem;margin:0 0 8px;line-height:1.35;text-wrap:balance}
+.scene{background:var(--bg);border-radius:12px;padding:14px 16px;margin:12px 0;font-size:1.02rem}
+.scene b{color:var(--pink)}
+.opts{display:grid;gap:10px;margin-top:12px}
+.opt{display:block;width:100%;text-align:right;font:inherit;font-weight:500;padding:12px 16px;border-radius:12px;border:2px solid var(--line);background:var(--paper);color:var(--fg);cursor:pointer;transition:border-color .15s}
+.opt:hover{border-color:var(--green)} .opt:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.opt.right{border-color:var(--ok);background:var(--green-soft)} .opt.wrong{border-color:var(--warn);background:var(--gold-soft)}
+.opt:disabled{cursor:default}
+.fb{margin-top:12px;padding:12px 16px;border-radius:12px;border-right:5px solid var(--green);background:var(--green-soft);font-size:.98rem}
+.fb.bad{border-right-color:var(--warn);background:var(--gold-soft)}
+.box{margin-top:14px;padding:14px 16px;border-radius:12px;border:1px dashed var(--line)}
+.box h3{margin:0 0 6px;font-size:1rem;display:flex;align-items:center;gap:8px}
+.box p{margin:0;font-size:.95rem} .box a{color:var(--green)}
+.box.know h3{color:var(--purple)} .box.try h3{color:var(--pink)}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:18px;flex-wrap:wrap}
+.btn{font:inherit;font-weight:700;padding:11px 22px;border-radius:999px;border:0;background:var(--green);color:#fff;cursor:pointer}
+.btn:disabled{opacity:.45;cursor:default} .btn.ghost{background:transparent;color:var(--green);border:2px solid var(--green)}
+.btn.pink{background:var(--pink)} .btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.small{font-size:.88rem;color:var(--muted)}
+.quiz li{margin-bottom:14px} .quiz ol{padding-right:20px;margin:0}
+.quiz .q{font-weight:700;margin-bottom:6px}
+.radios{display:grid;gap:6px} .radios label{display:flex;gap:8px;align-items:flex-start;padding:8px 12px;border-radius:10px;border:1px solid var(--line);cursor:pointer;font-size:.95rem}
+.radios input{margin-top:5px;accent-color:var(--green)}
+.score{display:flex;gap:12px;justify-content:center;margin:14px 0;flex-wrap:wrap}
+.tile{flex:1;min-width:120px;text-align:center;padding:12px;border-radius:12px;background:var(--bg)}
+.tile b{display:block;font-size:2rem;font-variant-numeric:tabular-nums;color:var(--green);line-height:1.1}
+.tile span{font-size:.85rem;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.chip{font:inherit;font-size:.92rem;padding:7px 14px;border-radius:999px;border:2px solid var(--line);background:var(--paper);color:var(--fg);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--pink-soft);border-color:var(--pink);color:var(--pink);font-weight:700}
+input[type=text],textarea{font:inherit;width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--fg);min-width:0}
+.plan{display:grid;gap:8px;margin-top:8px}
+.badge{margin:18px auto 8px;width:230px;max-width:100%;display:block}
+.badge-name{text-align:center;font-family:var(--display);font-size:1.4rem;color:var(--green);margin:0}
+.pledge-list{list-style:none;padding:0;margin:10px 0;display:grid;gap:6px}
+.pledge-list li::before{content:"♥ ";color:var(--pink)}
+.note{margin-top:16px;padding:10px 14px;border-radius:10px;background:var(--gold-soft);font-size:.88rem}
+.hidden{display:none}
+@media (prefers-reduced-motion:no-preference){.card{animation:in .35s ease}}
+@keyframes in{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
+footer{text-align:center;margin-top:22px;font-size:.82rem;color:var(--muted)}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>بوعيي أحمي وطني</h1>
+  <p>وبأثري أترك بصمة · رحلة من خمس محطات لطالبات المرحلة المتوسطة</p>
+</header>
+<div class="prog" id="prog" aria-hidden="true"></div>
+<div id="stage"></div>
+<footer>المتوسطة الثامنة والعشرون بالمدينة المنورة · الإعداد: أ/ أروى الأحمدي، أ/ إيمان الردادي<br>لا تجمع هذه الصفحة أي اسم أو بيانات؛ كل ما تكتبينه يبقى على جهازك.</footer>
+</div>
+
+<script>
+const QUIZ=[
+ {q:'وصلتكِ في مجموعة الصف رسالة: «عاجل! إغلاق المدارس غدًا، انشري بسرعة». ماذا تفعلين؟',
+  a:['أنشرها فورًا حتى تستفيد صديقاتي','أبحث عن الخبر في حساب وزارة التعليم الرسمي أولًا','أرسلها لأمي لتتأكد ثم أنشرها'],c:1},
+ {q:'صديقتكِ صوّرت زميلة في موقف محرج وتريد نشر الصورة «للضحك». ما الصواب؟',
+  a:['لا بأس إن حذفتها بعد يوم','أطلب منها حذفها لأن نشرها قد يضرّ الزميلة ويخالف النظام','أطلب نسخة لأحتفظ بها'],c:1},
+ {q:'رابط وصلكِ من رقم مجهول: «ربحتِ جوالًا، اضغطي هنا». ماذا تفعلين؟',
+  a:['أفتحه لأرى ما فيه','أضغط ضغطة مطوّلة لأقرأ العنوان، وإن كان غريبًا أتجاهله','أرسله لصديقاتي ليجرّبن'],c:1},
+ {q:'في الفسحة سخرت مجموعة من زميلة بسبب لهجتها. أنتِ شاهدة فقط. ماذا تفعلين؟',
+  a:['أبتعد لأن الأمر لا يخصني','أضحك معهن حتى لا يسخرن مني','أقترب من الزميلة وأدعوها تجلس معي، وأخبر المعلمة'],c:2},
+];
+const STATIONS=[
+ {n:1,color:'c-green',title:'وطني أمانة .. فبوعيي أحميه',
+  scene:'في أول يوم بالفصل، اقترحت المعلمة أن تختار كل طالبة <b>عملًا واحدًا</b> تقدمه للمدرسة هذا الأسبوع. تقول زميلتكِ: «الوطن مسؤولية الكبار، إيش بيفرق عملي الصغير؟»',
+  opts:['أوافقها؛ أنا طالبة ولا أستطيع تغيير شيء','أقول لها: الوطن يُبنى من أعمال صغيرة كثيرة، وأختار عملًا أبدأ به اليوم','أقول: سأفكر لاحقًا'],c:1,
+  good:'أحسنتِ. مسؤوليتكِ تجاه وطنكِ تبدأ من نفسكِ ومن مدرستكِ، لا من انتظار الكبار.',
+  bad:'جرّبي النظر إليها بطريقة أخرى: من يحمون الوطن اليوم بدؤوا بأعمال صغيرة وهم في مثل سنّكِ.',
+  know:'بلغ عدد المتطوعين في المملكة عام 2025 نحو مليون وسبعمئة وخمسين ألفًا، فتجاوزوا هدف رؤية 2030 (مليون متطوع) قبل موعده بخمس سنوات.',
+  knowSrc:'https://www.alwatan.com.sa/article/1178041',
+  try:'اكتبي عملًا واحدًا تقدمينه لمدرستكِ هذا الأسبوع وحددي له يومًا: ترتيب مكتبة الفصل، مساعدة زميلة في درس، العناية بنبتة في الساحة.'},
+ {n:2,color:'c-pink',title:'الأمن الرقمي .. حماية لكِ ولمن تحبين',
+  scene:'أمامكِ رابطان وصلاكِ اليوم. الأول: <b>moe.gov.sa/students</b>. الثاني: <b>moe-gov-sa.prizes-win.net/students</b>. كلاهما يدّعي أنه من وزارة التعليم. أيهما تفتحين؟',
+  opts:['الأول','الثاني','كلاهما يبدو رسميًا'],c:0,
+  good:'صحيح. العنوان الرسمي ينتهي بـ gov.sa مباشرة. الثاني يضع اسم الوزارة داخل موقع آخر اسمه prizes-win.net.',
+  bad:'انتبهي: ما يهم هو الجزء الذي قبل أول شرطة مائلة (/). في الثاني الموقع الحقيقي هو prizes-win.net، واسم الوزارة مجرد تمويه.',
+  know:'المادة الثالثة من نظام مكافحة الجرائم المعلوماتية تعاقب على المساس بالحياة الخاصة بالجوال المزود بكاميرا، وعلى التشهير بالآخرين، بالسجن حتى سنة وغرامة حتى 500 ألف ريال، أو بإحداهما.',
+  knowSrc:'https://ajel.sa/local/ofoch8pdw6',
+  try:'قبل فتح أي رابط، اضغطي عليه ضغطة مطوّلة دون أن تفتحيه، واقرئي العنوان. إن لم يطابق اسم الجهة الرسمية فلا تفتحيه.'},
+ {n:3,color:'c-purple',title:'لا للشائعات .. نعم للوعي',
+  scene:'عنوان في مجموعة الواتساب: <b>«مستشفى المدينة يؤكد: مرض خطير ينتشر في المدارس، أرسلي للجميع فورًا!»</b> بلا مصدر ولا رابط. الرسالة أثارت خوفكِ. ماذا تفعلين؟',
+  opts:['أرسلها لأهلي فورًا، الاحتياط واجب','أبحث عن الخبر في حساب وزارة الصحة أو مستشفى المدينة الرسمي قبل أي شيء','أرسلها مع عبارة «ما أدري إذا صحيح بس احتياط»'],c:1,
+  good:'ممتاز. الخوف الشديد إشارة للتوقف لا للنشر. والبحث عن الجهة الناشرة في مصدر مستقل هو ما يفعله المتخصصون في كشف الأخبار.',
+  bad:'الإرسال «احتياطًا» هو بالضبط ما تعتمد عليه الشائعة لتنتشر. التوقف دقيقة والبحث عن المصدر يحمي أهلكِ أكثر.',
+  know:'درس باحثون من معهد ماساتشوستس للتقنية الأخبار على تويتر بين 2006 و2017: احتمال إعادة نشر الخبر الكاذب يزيد على الصحيح بنحو 70%، والبشر لا الحسابات الآلية هم السبب الأكبر.',
+  knowSrc:'https://mitsloan.mit.edu/press/false-news-spreads-widely-and-easily',
+  try:'إذا أثار الخبر فيكِ غضبًا أو دهشة كبيرة، فهذه إشارة للتوقف. افتحي بحثًا جديدًا عن الجهة التي نشرته قبل أن تكملي قراءته. وللإبلاغ عن الجرائم المعلوماتية: أخبري معلمتكِ أو وليّة أمركِ، أو عبر تطبيق «كلنا أمن».'},
+ {n:4,color:'c-green',title:'احترام الاختلاف .. قوة مجتمعنا',
+  scene:'في الفسحة، مجموعة من الطالبات تسخر من زميلة جديدة بسبب لهجتها، وإحداهن تصوّرها بالجوال. أنتِ <b>شاهدة</b> فقط، ولستِ مشاركة. ماذا تفعلين؟',
+  opts:['أبتعد؛ لا أريد أن أكون التالية','أقترب من الزميلة وأدعوها تجلس معي، وأخبر المعلمة أو الموجهة','أقول لهن «حرام عليكم» ثم أذهب'],c:1,
+  good:'هذا هو تدخّل الشاهدة الفعّال: تُخرجين الزميلة من الموقف بهدوء، وتُبلغين من يستطيع إيقافه. ولا تنسي أن التصوير دون إذن مخالفة نظامية.',
+  bad:'الابتعاد يترك الزميلة وحدها، والكلمة العابرة لا توقف الموقف غالبًا. الأقوى: اقتربي منها وأخرجيها من الموقف، ثم أبلغي.',
+  know:'مراجعة علمية لـ 12 برنامجًا مدرسيًا شملت قرابة 13 ألف طالب وجدت أن تدريب الطلاب على التدخل زاد من تدخلهم فعلًا عند رؤية التنمر.',
+  knowSrc:'https://ojp.gov/ncjrs-virtual-library/redirect/306496',
+  try:'إذا رأيتِ زميلة تتعرض للسخرية: لا تضحكي ولا تعيدي نشر ما يُقال عنها، اقتربي منها أو ادعيها لتبتعد معكِ، ثم أخبري معلمتكِ أو الموجهة الطلابية.'},
+];
+const PLEDGES=['مواطنة واعية ومسؤولة','مُحافظة على أمن وطني','أستخدم التقنية بوعي وأمان','أرفض الشائعات وأنشر الحقيقة','أحترم الآخرين وأقدّر اختلافهم','أجتهد في دراستي وأصنع مستقبلي'];
+const TRIGGERS=['وصلني خبر مثير في مجموعة الواتساب','رأيتُ زميلة تتعرض للسخرية','جاءني رابط من رقم مجهول','طُلب مني نشر صورة زميلة'];
+
+const TOTAL=1+STATIONS.length+2; // intro+quiz, 4 stations, pledge, post
+let step=0, pre=null, post=null, picked=new Set(), plans=[];
+const stage=document.getElementById('stage'), prog=document.getElementById('prog');
+for(let i=0;i<TOTAL;i++){prog.appendChild(document.createElement('span'))}
+function drawProg(){[...prog.children].forEach((s,i)=>{s.className=i<step?'done':i===step?'cur':''})}
+function go(n){step=n;drawProg();render();window.scrollTo({top:0,behavior:'smooth'})}
+
+function quizHTML(id){
+ return `<ol class="quiz">${QUIZ.map((q,i)=>`<li><div class="q">${q.q}</div><div class="radios">${q.a.map((a,j)=>`<label><input type="radio" name="${id}q${i}" value="${j}">${a}</label>`).join('')}</div></li>`).join('')}</ol>`}
+function readQuiz(id){let s=0,done=true;QUIZ.forEach((q,i)=>{const v=document.querySelector(`input[name="${id}q${i}"]:checked`);if(!v)done=false;else if(+v.value===q.c)s++});return done?s:null}
+
+function render(){
+ if(step===0){
+  stage.innerHTML=`<section class="card"><span class="eyebrow c-gold">قبل أن نبدأ</span><h2>أربعة مواقف .. ماذا تفعلين الآن؟</h2>
+  <p class="small">لا توجد إجابة تُحسب عليكِ. هذا فقط لنقارن تفكيركِ قبل الرحلة وبعدها.</p>${quizHTML('pre')}
+  <div class="nav"><span class="small">اختاري إجابة لكل موقف</span><button class="btn" id="startBtn" disabled>ابدئي الرحلة</button></div></section>`;
+  const b=document.getElementById('startBtn');
+  stage.addEventListener('change',()=>{b.disabled=readQuiz('pre')===null},{once:false});
+  b.onclick=()=>{pre=readQuiz('pre');go(1)};
+ } else if(step>=1&&step<=STATIONS.length){
+  const s=STATIONS[step-1];
+  stage.innerHTML=`<section class="card"><span class="eyebrow ${s.color}">المحطة ${s.n} من ${STATIONS.length}</span><h2>${s.title}</h2>
+  <div class="scene">${s.scene}</div>
+  <div class="opts" id="opts">${s.opts.map((o,i)=>`<button class="opt" data-i="${i}">${o}</button>`).join('')}</div>
+  <div id="fb"></div>
+  <div class="box know hidden" id="know"><h3>هل تعلمين؟</h3><p>${s.know} <a href="${s.knowSrc}" target="_blank" rel="noopener">المصدر</a></p></div>
+  <div class="box try hidden" id="try"><h3>جرّبي الآن</h3><p>${s.try}</p></div>
+  <div class="nav"><button class="btn ghost" id="back">رجوع</button><button class="btn" id="next" disabled>المحطة التالية</button></div></section>`;
+  document.getElementById('back').onclick=()=>go(step-1);
+  document.getElementById('next').onclick=()=>go(step+1);
+  document.querySelectorAll('.opt').forEach(btn=>btn.onclick=()=>{
+   const i=+btn.dataset.i, ok=i===s.c;
+   document.querySelectorAll('.opt').forEach(b=>{b.disabled=true;if(+b.dataset.i===s.c)b.classList.add('right')});
+   if(!ok)btn.classList.add('wrong');
+   document.getElementById('fb').innerHTML=`<div class="fb ${ok?'':'bad'}">${ok?s.good:s.bad}</div>`;
+   document.getElementById('know').classList.remove('hidden');document.getElementById('try').classList.remove('hidden');
+   document.getElementById('next').disabled=false;
+  });
+ } else if(step===STATIONS.length+1){
+  stage.innerHTML=`<section class="card"><span class="eyebrow c-pink">المحطة ${STATIONS.length+1}</span><h2>ميثاقي للوطن</h2>
+  <p>اختاري ما تتعهدين به فعلًا (اثنين على الأقل):</p>
+  <div class="chips" id="chips">${PLEDGES.map((p,i)=>`<button class="chip" data-i="${i}" aria-pressed="${picked.has(i)}">${p}</button>`).join('')}</div>
+  <p style="margin-top:14px"><b>خطتي بكلماتي.</b> التعهد العام وحده لا يكفي غالبًا؛ حددي الموقف والتصرف مسبقًا بصيغة «إذا .. فسوف»:</p>
+  <div class="plan">
+   <label class="small" for="trig">إذا</label>
+   <input list="trigs" id="trig" type="text" placeholder="مثال: وصلني خبر مثير في مجموعة الواتساب" value="${plans[0]||''}">
+   <datalist id="trigs">${TRIGGERS.map(t=>`<option value="${t}">`).join('')}</datalist>
+   <label class="small" for="act">فسوف</label>
+   <input id="act" type="text" placeholder="مثال: أبحث عن مصدره قبل أن أرسله" value="${plans[1]||''}">
+  </div>
+  <p class="small" style="margin-top:10px">تحليل جامع لـ 94 اختبارًا وجد أن خطط «إذا .. فسوف» تحسّن تحقيق الأهداف بأثر متوسط إلى كبير. <a href="https://kops.uni-konstanz.de/entities/publication/2e749bfb-8533-437c-8203-7e788c910c5f" target="_blank" rel="noopener" style="color:var(--green)">Gollwitzer &amp; Sheeran، 2006</a></p>
+  <div class="nav"><button class="btn ghost" id="back">رجوع</button><button class="btn pink" id="next">أختم الرحلة</button></div></section>`;
+  const next=document.getElementById('next');
+  const check=()=>{next.disabled=picked.size<2};check();
+  document.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{const i=+c.dataset.i;picked.has(i)?picked.delete(i):picked.add(i);c.setAttribute('aria-pressed',picked.has(i));check()});
+  document.getElementById('back').onclick=()=>go(step-1);
+  next.onclick=()=>{plans=[document.getElementById('trig').value.trim(),document.getElementById('act').value.trim()];go(step+1)};
+ } else {
+  stage.innerHTML=`<section class="card"><span class="eyebrow c-gold">بعد الرحلة</span><h2>المواقف الأربعة نفسها .. ماذا تفعلين الآن؟</h2>${quizHTML('post')}
+  <div class="nav"><button class="btn ghost" id="back">رجوع</button><button class="btn" id="fin" disabled>أرى نتيجتي</button></div>
+  <div id="result"></div></section>`;
+  const b=document.getElementById('fin');
+  stage.addEventListener('change',()=>{b.disabled=readQuiz('post')===null});
+  document.getElementById('back').onclick=()=>go(step-1);
+  b.onclick=()=>{post=readQuiz('post');showResult();b.closest('.nav').classList.add('hidden')};
+ }
+}
+function showResult(){
+ const diff=post-pre;
+ const msg=diff>0?`تحسّنت إجاباتكِ في ${diff} ${diff===1?'موقف':'مواقف'} عن البداية.`:diff===0?'إجاباتكِ ثابتة من البداية؛ المهم أن تطبقيها عمليًا.':'بعض إجاباتكِ تغيّرت؛ راجعي المحطات مرة أخرى بهدوء.';
+ const planLine=plans[0]&&plans[1]?`<p class="small" style="text-align:center">خطتي: إذا ${plans[0]}، فسوف ${plans[1]}.</p>`:'';
+ document.getElementById('result').innerHTML=`
+ <div class="score"><div class="tile"><b>${pre}/4</b><span>قبل الرحلة</span></div><div class="tile"><b>${post}/4</b><span>بعد الرحلة</span></div></div>
+ <p style="text-align:center">${msg}</p>
+ <svg class="badge" viewBox="0 0 200 200" aria-label="شارة مواطنة واعية"><circle cx="100" cy="100" r="92" fill="var(--green-soft)" stroke="var(--green)" stroke-width="4"/><circle cx="100" cy="100" r="76" fill="none" stroke="var(--pink)" stroke-width="2" stroke-dasharray="4 6"/><path d="M100 40 l10 26 h28 l-22 17 8 27 -24 -17 -24 17 8 -27 -22 -17 h28z" fill="var(--gold)"/><text x="100" y="140" text-anchor="middle" font-family="Tajawal,sans-serif" font-weight="800" font-size="17" fill="var(--green)">مواطنة واعية</text><text x="100" y="162" text-anchor="middle" font-family="Tajawal,sans-serif" font-size="11" fill="var(--muted)">أتممتُ الرحلة بوعي</text></svg>
+ <p class="badge-name">وطني يستحق وأنا أستطيع</p>
+ <ul class="pledge-list">${[...picked].sort().map(i=>`<li>${PLEDGES[i]}</li>`).join('')}</ul>${planLine}
+ <div class="note">احتفظي بالشارة بلقطة شاشة، أو أريها للموجهة الطلابية. هذه الصفحة لا تحفظ شيئًا عنكِ.</div>
+ <div class="nav" style="justify-content:center"><button class="btn ghost" id="again">أبدأ من جديد</button></div>`;
+ document.getElementById('again').onclick=()=>{pre=post=null;picked=new Set();plans=[];go(0)};
+}
+drawProg();render();
+</script>
+
+</body>
+</html>
